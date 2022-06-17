@@ -1,0 +1,4 @@
+[submodule "wasmd"]
+	path = wasmd
+	url = https://github.com/CosmWasm/wasmd
+	version = v0.27.0

@@ -19,7 +19,7 @@ network:
   endpoint: https://rpc.juno-1.api.onfinality.io
   chainTypes: # This is a beta feature that allows support for any Cosmos chain by importing the correct protobuf messages
    cosmos.slashing.v1beta1:
-     file: "./proto/cosmos/slashing/v1beta1/tx.proto"
+     file: ".wasmd/third_party/proto/cosmos/slashing/v1beta1/tx.proto"
      messages:
       - "MsgUnjail"
 
