@@ -20,6 +20,14 @@ type Message @entity {
   id: ID!
   blockHeight: BigInt!
   txHash: String!
-  sender: String!
-  contract: String!
+  sender: String
+  contract: String
+  msg: String!
+  # funds: [Coin!]
 }
+
+# type Coin @entity {
+#   id: ID!
+#   amount: BigInt!
+#   denom: String!
+# }

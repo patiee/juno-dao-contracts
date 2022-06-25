@@ -5,6 +5,7 @@ import {
   CosmosMessage,
   CosmosTransaction,
 } from "@subql/types-cosmos";
+// import { Coin } from "../types/models/Coin";
 
 export async function handleBlock(block: CosmosBlock): Promise<void> {
   // If you wanted to index each block in Cosmos (Juno), you could do that here
@@ -18,13 +19,39 @@ export async function handleTransaction(tx: CosmosTransaction): Promise<void> {
 }
 
 export async function handleMessage(msg: CosmosMessage): Promise<void> {
-  const messageRecord = new Message(`${msg.tx.hash}-${msg.idx}`);
+  const txHash = msg.tx.hash ? msg.tx.hash : "";
+  const id = `${txHash}-${msg.idx}`;
+  const contractAddress = msg.msg.decodedMsg.contract;
+
+  if (contractAddress) {
+    return;
+  }
+
+  const messageRecord = new Message(id);
+  messageRecord.txHash = txHash;
   messageRecord.blockHeight = BigInt(msg.block.block.header.height);
-  messageRecord.txHash = msg.tx.hash;
-  messageRecord.sender = msg.msg.sender;
-  messageRecord.contract = msg.msg.contract;
+  messageRecord.sender = msg.msg.decodedMsg.sender;
+  messageRecord.contract = contractAddress;;
+  messageRecord.msg = JSON.stringify(msg.msg.decodedMsg);
+  // messageRecord.fundsId = saveCoins(id, msg.msg.decodedMsg.funds);
   await messageRecord.save();
 }
+
+// function saveCoins(id: string, coins: Array<any>): Array<string> {
+//   let coinIDs = Array<string>(coins.length);
+//   for (let i=0; i<coins.length; i++) {
+//     coinIDs[i] = saveCoin(`${id}-${i}`, coins[i]);
+//   }
+//   return coinIDs;
+// }
+
+// function saveCoin(id: string, c: any): string {
+//   const coin = new Coin(id);
+//   coin.amount = c.amount;
+//   coin.denom = c.denom;
+//   coin.save();
+//   return id;
+// }
 
 export async function handleEvent(event: CosmosEvent): Promise<void> {
   const eventRecord = new ExecuteEvent(
