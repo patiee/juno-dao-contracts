@@ -1,9 +1,16 @@
 export default function base64ToString(base64) {
+  logger.info("base64ToString")
   const json = JSON.stringify(base64);
   if (json !== "" && json.includes(`{`) && !json.includes(`{"0":`)) {
+    logger.info("return base64")
     return base64;
   }
-  return decodeBase64ToString(base64);
+  const decoded = decodeBase64ToString(base64);
+  if (decoded[0] === "{") {
+    return JSON.parse(decoded)
+  }
+  logger.info(`return decodeBase64ToString: ${decoded}`)
+  return decoded;
 }
 
 function decodeBase64ToString(base64) {

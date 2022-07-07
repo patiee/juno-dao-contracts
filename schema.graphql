@@ -1,4 +1,3 @@
-# type Message implements MessageInterface @entity {
 type Message @entity {
   id: ID!
   index: Int
@@ -8,7 +7,6 @@ type Message @entity {
   sender: String
   contract: String
   msg: String
-  # funds: [Coin]
 }
 
 type MsgStoreCode @entity {
@@ -31,7 +29,7 @@ enum AccessType {
   ACCESS_TYPE_EVERYBODY
 }
 
-type MsgInstantiateContract implements ContractCall @entity {
+type MsgInstantiateContract @entity {
   id: ID!
   index: Int
   height: BigInt
@@ -44,7 +42,7 @@ type MsgInstantiateContract implements ContractCall @entity {
   codeID: String
   label: String
   msg: String
-  # funds: [Coin]
+  sch: String
 }
 
 type MsgExecuteContract @entity {
@@ -59,8 +57,7 @@ type MsgExecuteContract @entity {
   codeID: String
   label: String
   msg: String
-  # msgInterface: MessageInterface
-  # funds: [Coin]
+  sch: String
 }
 
 type MsgMigrateContract @entity {
@@ -104,11 +101,4 @@ interface ContractCall {
   codeID: String
   label: String
   msg: String
-  # funds: [Coin]
 }
-
-# type Coin @entity {
-#   id: ID!
-#   amount: BigInt!
-#   denom: String!
-# }
