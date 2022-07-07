@@ -8,7 +8,6 @@ type Message @entity {
   sender: String
   contract: String
   msg: String
-  rawMsg: String
   # funds: [Coin]
 }
 
@@ -45,7 +44,6 @@ type MsgInstantiateContract implements ContractCall @entity {
   codeID: String
   label: String
   msg: String
-  raw: String
   # funds: [Coin]
 }
 
@@ -61,7 +59,6 @@ type MsgExecuteContract @entity {
   codeID: String
   label: String
   msg: String
-  raw: String
   # msgInterface: MessageInterface
   # funds: [Coin]
 }
@@ -107,22 +104,8 @@ interface ContractCall {
   codeID: String
   label: String
   msg: String
-  raw: String
   # funds: [Coin]
 }
-
-# interface MessageInterface {
-#   id: ID!
-#   index: Int!
-#   height: BigInt
-#   hash: String!
-#   txHash: String!
-#   sender: String
-#   contract: String
-#   msg: String!
-#   rawMsg: String!
-#   # funds: [Coin]
-# }
 
 # type Coin @entity {
 #   id: ID!
