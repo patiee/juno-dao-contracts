@@ -14,7 +14,6 @@ repository: https://github.com/subquery/juno-subql-starter
 schema:
   file: ./schema.graphql
 
-
 network:
   chainId: juno-1
   endpoint: https://rpc.juno-1.api.onfinality.io
@@ -23,7 +22,7 @@ network:
 
 dataSources:
   - kind: cosmos/Runtime
-    startBlock: 3600000
+    startBlock: 3688434
     mapping:
       file: "./dist/index.js"
       handlers:
