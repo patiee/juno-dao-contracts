@@ -4,7 +4,7 @@ version: 0.0.1
 runner:
   node:
     name: "@subql/node-cosmos"
-    version: ">0.0.1-14"
+    version: "*"
   query:
     name: "@subql/query"
     version: "*"
@@ -17,22 +17,17 @@ schema:
 network:
   chainId: juno-1
   endpoint: https://rpc.juno-1.api.onfinality.io
-  chainTypes: # This is a beta feature that allows support for any Cosmos chain by importing the correct protobuf messages
-   cosmos.slashing.v1beta1:
-     file: "./proto/cosmos/slashing/v1beta1/tx.proto"
-     messages:
-      - "MsgUnjail"
 
 dataSources:
   - kind: cosmos/Runtime
-    startBlock: 3333333
+    startBlock: 4136532
     mapping:
       file: "./dist/index.js"
       handlers:
         - handler: handleMessage
           kind: cosmos/MessageHandler
-          filter:
-            type: "/cosmwasm.wasm.v1.MsgExecuteContract"
+          # filter:
+          #   type: "/cosmwasm.wasm.v1.MsgExecuteContract"
             # Filter to only messages with the provide_liquidity function call
             #contractCall: "provide_liquidity" # The name of the contract function that was called
             #values: # A set of key/value pairs that are present in the message data
