@@ -1,25 +1,114 @@
-type Block @entity {
-  id: ID! # The block hash
-  height: BigInt!
-}
-
-type ExecuteEvent @entity {
-  id: ID!
-  blockHeight: BigInt!
-  txHash: String!
-  contractAddress: String!
-}
-
-type Transaction @entity {
-  id: ID!
-  blockHeight: BigInt!
-  timestamp: String!
-}
-
+# type Message implements MessageInterface @entity {
 type Message @entity {
   id: ID!
-  blockHeight: BigInt!
-  txHash: String!
-  sender: String!
-  contract: String!
+  index: Int
+  height: BigInt
+  hash: String
+  txHash: String
+  sender: String
+  contract: String
+  msg: String
+  # funds: [Coin]
 }
+
+type MsgStoreCode @entity {
+  id: ID!
+  sender: String
+  wasm_byte_code: Bytes
+  instantiate_permission: AccessConfig
+}
+
+type AccessConfig @entity {
+  id: ID!
+  permission: AccessType
+  address: String
+}
+
+enum AccessType {
+  ACCESS_TYPE_UNSPECIFIED
+  ACCESS_TYPE_NOBODY
+  ACCESS_TYPE_ONLY_ADDRESS
+  ACCESS_TYPE_EVERYBODY
+}
+
+type MsgInstantiateContract implements ContractCall @entity {
+  id: ID!
+  index: Int
+  height: BigInt
+  hash: String
+  txHash: String
+  contract: String
+  sender: String
+  admin: String
+  type: String
+  codeID: String
+  label: String
+  msg: String
+  # funds: [Coin]
+}
+
+type MsgExecuteContract @entity {
+  id: ID!
+  index: Int
+  height: BigInt
+  hash: String
+  txHash: String
+  contract: String
+  sender: String
+  type: String
+  codeID: String
+  label: String
+  msg: String
+  # msgInterface: MessageInterface
+  # funds: [Coin]
+}
+
+type MsgMigrateContract @entity {
+  id: ID!
+  sender: String
+  contract: String
+  code_id: Int
+  msg: String
+}
+
+type MsgUpdateAdmin @entity {
+  id: ID!
+  sender: String
+  new_admin: String
+  contract: String
+}
+
+type MsgClearAdmin @entity {
+  id: ID!
+  sender: String
+  contract: String
+}
+
+type Any @entity {
+  id: ID!
+  messageID: String!
+  typeUrl: String!
+  value: String!
+  decoded: String
+}
+
+interface ContractCall {
+  id: ID!
+  index: Int
+  height: BigInt
+  hash: String
+  txHash: String
+  contract: String
+  sender: String
+  type: String
+  codeID: String
+  label: String
+  msg: String
+  # funds: [Coin]
+}
+
+# type Coin @entity {
+#   id: ID!
+#   amount: BigInt!
+#   denom: String!
+# }
